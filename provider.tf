@@ -2,14 +2,14 @@ terraform {
  required_providers {
    aws = {
      source  = "hashicorp/aws"
-     version = "~> 4.18.0"
+     version = "~> 5.42.0"
    }
  }
 
  backend "s3" {
-   bucket = "tf-tuts-state"
+   bucket = "exceloid-terraform-tfstat"
    key    = "state"
-   region = "eu-central-1"
+   region = "us-east-1"
  }
 }
 
