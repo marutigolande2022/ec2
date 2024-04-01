@@ -13,3 +13,8 @@ resource "aws_instance" "my_vm" {
  }
 }
 
+resource "aws_eip" "lb" {
+  instance = aws_instance.my_vm.id
+  domain   = var.domain
+}
+
