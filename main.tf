@@ -1,20 +1,15 @@
-resource "aws_key_pair" "deployer" {
-  key_name   = "terraform-key"
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCi6bE6PoHycGUkPoejnUWQ4jWC9tP64pr6mW0qXoM11P7d5sJq2k9Iaf2aT+ARalrSiYp+UxeQ1BTi0tIT2DMM+AifBPYlLMoFpdKuLERFBYKxzBT1D9BfeBKeJrPLSw+CHNLRQhMMOOe4acm+4XVk6ED3FMaJSWUvqI1J0Al3hVW4pLIrevEuP9ga54avLRVFIZF/JuVvNPbSvsXF2uKg0sQwwG5RxaS9zehhUL4jTI5L/ZDbePwRGGrX6TBCsHJVxZW92qapOQ/bwouo8LmFy/A8GMbZ4GqX2SsOjvCwSSPObHR/WnApNUEfi5WZw7S57yivKd66ITqLRFc75Tib maruti@maruti-HP-Laptop-15-bs1xx"
+# using ami create new instance
+# Create an AMI that will start a machine whose root device is backed by
+# an EBS volume populated from a snapshot. We assume that such a snapshot
+# already exists with the id "snap-xxxxxxxx".
+resource "aws_ami" "example" {
+  name                = "terraform-example"
+  virtualization_type = "hvm"
+  root_device_name    = "/dev/xvda"
+  imds_support        = "v2.0" # Enforce usage of IMDSv2. You can safely remove this line if your application explicitly doesn't support it.
+  ebs_block_device {
+    device_name = "/dev/xvda"
+    snapshot_id = "snap-xxxxxxxx"
+    volume_size = 8
+  }
 }
-
-resource "aws_instance" "my_vm" {
- ami           = var.ami //Ubuntu AMI
- instance_type = var.instance_type
- key_name      = aws_key_pair.deployer.key_name
-
- tags = {
-   Name = var.name_tag,
- }
-}
-
-resource "aws_eip" "lb" {
-  instance = aws_instance.my_vm.id
-  domain   = var.domain
-}
-
