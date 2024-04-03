@@ -13,3 +13,7 @@ variable "name_tag" {
    description = "Name of the EC2 instance"
 }
 
+variable "domain" {
+   type        = string
+   description = "Name of the EC2 instance"
+}
