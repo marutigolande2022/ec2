@@ -4,7 +4,7 @@ resource "aws_ami_from_instance" "example" {
   source_instance_id = "i-xxxxxxxx"
 }
 
-
+#copy ami from another region
 resource "aws_ami_copy" "example" {
   name              = "terraform-example"
   description       = "A copy of ami-xxxxxxxx"
@@ -14,4 +14,10 @@ resource "aws_ami_copy" "example" {
   tags = {
     Name = "HelloWorld"
   }
+}
+
+#copy ami to another account.
+resource "aws_ami_launch_permission" "example" {
+  image_id   = "ami-12345678"
+  account_id = "123456789012"
 }
