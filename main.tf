@@ -7,6 +7,7 @@ resource "aws_instance" "my_vm" {
  ami           = var.ami //Ubuntu AMI
  instance_type = var.instance_type
  key_name      = aws_key_pair.deployer.key_name
+ count         = 3
 
  tags = {
    Name = var.name_tag,
