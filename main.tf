@@ -1,7 +1,7 @@
 #create ami id from instance.
 resource "aws_ami_from_instance" "example" {
-  name               = "terraform-example"
-  source_instance_id = "i-xxxxxxxx"
+  name               = var.instance_name
+  source_instance_id = var.source_instance_id
 }
 
 #copy ami from another region
